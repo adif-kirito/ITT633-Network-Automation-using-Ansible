@@ -1,0 +1,23 @@
+- name: Change control – OSPF priority tuning
+  hosts: ios
+  gather_facts: no
+
+  vars:
+    ospf_priority:
+      R1: 200
+      R2: 150
+      R3: 1
+      R4: 1
+
+  tasks:
+    - name: Set OSPF priority on LAN interface
+      cisco.ios.ios_config:
+        lines:
+          - interface GigabitEthernet0/0
+          - ip ospf priority {{ ospf_priority[inventory_hostname] }}
+
+    - name: Clear OSPF process (trigger re-election)
+      cisco.ios.ios_command:
+        commands:
+          - clear ip ospf process
+      when: inventory_hostname == "R1"
