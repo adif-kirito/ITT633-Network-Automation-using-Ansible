@@ -20,3 +20,23 @@
         commands:
           - show ip route ospf
       register: ospf_routes
+
+
+
+
+- name: Save OSPF verification output
+  copy:
+    content: |
+      ===== {{ inventory_hostname }} =====
+
+      --- OSPF Neighbor ---
+      {{ ospf_neighbor.stdout[0] }}
+
+      --- OSPF Interface ---
+      {{ ospf_interface.stdout[0] }}
+
+      --- OSPF Routes ---
+      {{ ospf_routes.stdout[0] }}
+    dest: outputs/{{ inventory_hostname }}_ospf_verify.txt
+
+
