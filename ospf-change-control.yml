@@ -21,3 +21,11 @@
         commands:
           - clear ip ospf process
       when: inventory_hostname == "R1"
+
+
+- name: Verify DR/BDR after change
+  cisco.ios.ios_command:
+    commands:
+      - show ip ospf neighbor
+      - show ip ospf interface g0/0
+
