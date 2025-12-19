@@ -1,0 +1,22 @@
+- name: Verify OSPF operation
+  hosts: ios
+  gather_facts: no
+
+  tasks:
+    - name: Check OSPF neighbors
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf neighbor
+      register: ospf_neighbor
+
+    - name: Check OSPF interface status
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf interface g0/0
+      register: ospf_interface
+
+    - name: Check OSPF routes
+      cisco.ios.ios_command:
+        commands:
+          - show ip route ospf
+      register: ospf_routes
